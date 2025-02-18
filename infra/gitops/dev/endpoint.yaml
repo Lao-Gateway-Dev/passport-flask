@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: glusterfs-cluster
+  namespace: evisa-uat
+subsets:
+- addresses:
+  - ip: 10.2.100.120 # IP of dev-glusterfs01
+  - ip: 10.2.100.121 # IP of dev-glusterfs02
+  ports:
+  - port: 49152 # Default GlusterFS port

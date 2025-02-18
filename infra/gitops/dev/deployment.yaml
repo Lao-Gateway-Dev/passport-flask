@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: passport-flask
+  namespace: evisa-uat
+  labels:
+    app: passport-flask
+spec:
+  selector:
+    matchLabels:
+      app: passport-flask
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: passport-flask
+    spec:
+      imagePullSecrets:
+      - name: ghcr-secret
+      containers:
+      - name: passport-flask
+        image: ghcr.io/lao-gateway-dev/passport-flask:6668ce8e4315a1dd8509d22cc3ef9b657f0e858f
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 500m
+            memory: 100Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
+        livenessProbe:
+          tcpSocket:
+            port: 4322
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 4322
+          initialDelaySeconds: 5
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 10
+        envFrom:
+        - configMapRef:
+            name: passport-flask-config
+        ports:
+        - containerPort: 4322
+          name: http
+        volumeMounts:
+        - name: vol-passport-flask-uat
+          mountPath: /app/logs
+          subPath: k8s-storage-uat/vol-passport-flask-uat/logs
+        # - name: vol-passport-flask-uat
+        #   mountPath: /app/static/images
+        #   subPath: k8s-storage-uat/vol-passport-flask-uat/static/images
+        # - name: vol-passport-flask-uat
+        #   mountPath: /app/static/css
+        #   subPath: k8s-storage-uat/vol-passport-flask-uat/static/css
+        - name: vol-passport-flask-uat
+          mountPath: /app/static/uploads
+          subPath: k8s-storage-uat/vol-passport-flask-uat/static/uploads
+        - name: vol-passport-flask-uat
+          mountPath: /app/static/predicts
+          subPath: k8s-storage-uat/vol-passport-flask-uat/static/predicts
+      hostAliases:
+      - ip: 10.2.101.70
+        hostnames:
+        - mxf.laoevisa.gov.la
+      volumes:
+      - name: vol-passport-flask-uat
+        glusterfs:
+          endpoints: glusterfs-cluster # Name of the Endpoints object that contains GlusterFS pod IPs
+          path: vol1 # The volume name you created in GlusterFS
+          readOnly: false # Allow read/write access
+      restartPolicy: Always

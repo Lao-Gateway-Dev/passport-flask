@@ -1,0 +1,12 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: 'passport-flask-config'
+  namespace: 'evisa-uat'
+data:
+  NODE_ENV: "development"
+  HOST: "0.0.0.0"
+  PORT: "4322"
+  BASE_PATH: "/"
+  TZ: "Asia/Bangkok"
+  SERVICE_NAME: "passport-flask"
