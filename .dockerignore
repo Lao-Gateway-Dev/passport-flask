@@ -1,0 +1,49 @@
+.git
+Dockerfile
+.DS_Store
+.gitignore
+.dockerignore
+
+*.DS_Store
+.LSOverride
+
+._*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+*.log
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+static

@@ -1,0 +1,31 @@
+FROM python:3.10
+
+RUN apt-get update -y
+RUN rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Install Flask first
+RUN pip install flask
+
+# Copy and install requirements
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application
+COPY . .
+
+ENV PYTHONUNBUFFERED=1
+
+# Expose the port
+EXPOSE 4322
+
+# Set Flask environment variables
+ENV FLASK_APP=app.py
+# ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_ENV=development
+
+# Run the application
+# CMD ["flask", "run", "--port", "4321"]
+CMD ["gunicorn", "--bind", "0.0.0.0:4322", "app:app"]
