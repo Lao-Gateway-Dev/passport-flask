@@ -60,7 +60,7 @@ def timing_decorator(f):
         return result
     return wrap
 
-@app.route("/upload", methods=["POST"])
+@app.route("/predict", methods=["POST"])
 @timing_decorator
 def upload_image():
     if "image" not in request.files:
