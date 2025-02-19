@@ -28,10 +28,9 @@ jobs:
       # - name: Pull the latest Docker image
       # run: docker pull ghcr.io/lao-gateway-dev/passport-flask:latest || true
       - name: Build the Docker image
-        run:
-          docker build . --pull --platform=linux/amd64 --file Dockerfile.dev
+        run: docker build . --pull --platform=linux/amd64 --file Dockerfile.dev
           --tag ghcr.io/lao-gateway-dev/passport-flask:${{ env.GITHUB_SHA }}
-          # --tag ghcr.io/lao-gateway-dev/passport-flask:latest
+          --tag ghcr.io/lao-gateway-dev/passport-flask:latest
       - name: Push the Docker image
         run: docker push
           ghcr.io/lao-gateway-dev/passport-flask:${{env.GITHUB_SHA}}
