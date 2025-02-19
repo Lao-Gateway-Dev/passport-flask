@@ -24,7 +24,7 @@ spec:
       - name: ghcr-secret
       containers:
       - name: passport-flask
-        image: ghcr.io/lao-gateway-dev/passport-flask:ae8a42157fa81121a8d45253a4b6dcc946727974
+        image: ghcr.io/lao-gateway-dev/passport-flask:eb0f95df25c455e9eae85b1f97df19f7963ede0c
         imagePullPolicy: Always
         resources:
           requests:
