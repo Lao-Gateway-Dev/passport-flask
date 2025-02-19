@@ -5,8 +5,7 @@ import matplotlib.pyplot as plt
 import os
 from ultralytics import YOLO
 
-# Load YOLO model
-model = YOLO("ppmrz11x.pt")  # Replace with your trained model
+model = YOLO("ppmrz11x.pt")
 
 # Define class names
 CLASS_NAMES = {0: "mrz", 1: "passport"}
